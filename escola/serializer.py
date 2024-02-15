@@ -27,6 +27,18 @@ class AlunosSerializerV2(serializers.ModelSerializer):
         model = Aluno
         fields = ['id', 'nome', 'rg', 'cpf', 'data_nascimento', 'ativo']
 
+    def validate(self, data):
+        
+        if not cpf_valido(data['cpf']):
+            raise serializers.ValidationError({'cpf':'Número de CPF inválido'})
+    
+        if not nome_valido(data['nome']):
+            raise serializers.ValidationError({'nome':'O nome não pode conter número ou símbolos'})
+        
+        if not rg_valido(data['rg']):
+            raise serializers.ValidationError({'rg':'O CPF deve ter 9 digitos'})
+        
+        return data
 
 class CursoSerializer(serializers.ModelSerializer):
     class Meta:
