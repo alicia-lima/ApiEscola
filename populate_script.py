@@ -25,4 +25,4 @@ def criando_pessoas(quantidade_de_pessoas):
         p = Aluno(nome=nome, email=email, cpf=cpf, rg=rg, celular=celular, ativo=ativo, data_nascimento=data_nascimento)
         p.save()
 
-criando_pessoas(50)
+criando_pessoas(150)

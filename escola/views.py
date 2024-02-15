@@ -1,6 +1,6 @@
 from rest_framework import viewsets, generics, filters
 from escola.models import Aluno, Curso, Matricula
-from escola.serializer import AlunosSerializer, CursoSerializer, MatriculaSerializer, ListaMatriculaAlunoSerializer, ListaAlunosMatriculadosSerializer
+from escola.serializer import AlunosSerializer, CursoSerializer, MatriculaSerializer, ListaMatriculaAlunoSerializer, ListaAlunosMatriculadosSerializer, AlunosSerializerV2
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
@@ -17,6 +17,11 @@ class AlunosViewsSet (viewsets.ModelViewSet):
     ordering_fields = ['nome']
     search_fields = ['nome', 'cpf']
     filterset_fields = ['ativo']
+    def get_serializer_class(self):
+        if self.request.version == 'v2':
+            return AlunosSerializerV2
+        else: 
+            return AlunosSerializer
 
 class CursosViewSet (viewsets.ModelViewSet):
     ''' Exibindo todos os Cursos'''

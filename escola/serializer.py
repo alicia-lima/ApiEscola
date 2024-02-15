@@ -21,7 +21,13 @@ class AlunosSerializer(serializers.ModelSerializer):
         if not celular_valido(data['celular']):
             raise serializers.ValidationError({'celular':'o número deve seguir este modelo: 11 91234-1234'})
         return data
-    
+
+class AlunosSerializerV2(serializers.ModelSerializer):
+    class Meta:
+        model = Aluno
+        fields = ['id', 'nome', 'rg', 'cpf', 'data_nascimento', 'ativo']
+
+
 class CursoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Curso 
