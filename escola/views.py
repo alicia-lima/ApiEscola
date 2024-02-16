@@ -1,7 +1,8 @@
-from rest_framework import viewsets, generics, filters
+from rest_framework import viewsets, generics, filters, status
 from escola.models import Aluno, Curso, Matricula
 from escola.serializer import AlunosSerializer, CursoSerializer, MatriculaSerializer, ListaMatriculaAlunoSerializer, ListaAlunosMatriculadosSerializer, AlunosSerializerV2
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.response import Response
 
 
 class AlunosViewsSet (viewsets.ModelViewSet):
@@ -19,11 +20,21 @@ class AlunosViewsSet (viewsets.ModelViewSet):
             return AlunosSerializerV2
         else: 
             return AlunosSerializer
+  
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            response = Response(serializer.data, status=status.HTTP_201_CREATED)
+            id = str(serializer.data['id'])
+            response['Location'] = request.build_absolute_uri() + id
+            return response 
+
 
 class CursosViewSet (viewsets.ModelViewSet):
     ''' Exibindo todos os Cursos'''
     
-    queryset = Curso.objects.all()
+    queryset = Curso.objects.all().order_by('code_curso')
     serializer_class = CursoSerializer
 
 class MatriculaViewSet (viewsets.ModelViewSet):

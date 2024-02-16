@@ -8,6 +8,7 @@ class Aluno(models.Model):
     celular = models.CharField(max_length=14, null=False, blank=False, default='')
     data_nascimento = models.DateField()
     ativo = models.BooleanField(default=False)
+    foto = models.ImageField(blank=True)
 
     def __str__ (self):
         return self.nome   

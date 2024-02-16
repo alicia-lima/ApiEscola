@@ -25,7 +25,7 @@ class AlunosSerializer(serializers.ModelSerializer):
 class AlunosSerializerV2(serializers.ModelSerializer):
     class Meta:
         model = Aluno
-        fields = ['id', 'nome', 'rg', 'cpf', 'data_nascimento', 'ativo']
+        fields = ['id', 'nome', 'rg', 'cpf', 'data_nascimento', 'ativo', 'foto']
 
     def validate(self, data):
         
