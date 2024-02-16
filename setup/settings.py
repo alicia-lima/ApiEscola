@@ -44,6 +44,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'setup.urls'
@@ -127,13 +128,14 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
 
     
-   # 'DEFAULT_PERMISSION_CLASSES': [
-   #     'rest_framework.permissions.IsAuthenticated',
-    #    'rest_framework.permissions.DjangoModelPermissions', 
-   # ],
-    #'DEFAULT_AUTHENTICATION_CLASSES': [
-    #    'rest_framework.authentication.BasicAuthentication',
-    #],
+#    'DEFAULT_PERMISSION_CLASSES': [
+#        'rest_framework.permissions.IsAuthenticated',
+#        'rest_framework.permissions.DjangoModelPermissions', 
+#    ],
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#        'rest_framework.authentication.BasicAuthentication',
+#     ],
+#    essas linhas possibilitam que apenas pessoas logadas possam mexer na api 
 
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
@@ -143,6 +145,15 @@ REST_FRAMEWORK = {
         'anon': '100/day',
         'user': '1000/day'
     },   
+    #  'DEFAULT_PARSER_CLASSES': [
+    #     'rest_framework.parsers.JSONParser',
+    #     'rest_framework_xml.parsers.XMLParser',
+    # ],
+    # 'DEFAULT_RENDERER_CLASSES': [
+    #     'rest_framework.renderers.JSONRenderer',
+    #     'rest_framework_xml.renderers.XMLRenderer',
+    # ], 
+    #* essas linhas servem para possibilitar a api em json e xml 
 }
 
 CORS_ALLOWED_ORIGINS = [
