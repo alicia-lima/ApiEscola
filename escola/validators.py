@@ -8,7 +8,7 @@ def cpf_valido(numero_do_cpf):
 
 ''' def de validação de nome com apenas letras'''
 def nome_valido(nome):
-    return nome.isalpha()
+    return all(c.isalnum() or c.isspace() for c in nome)
 
 ''' def de validação da quantidade de números do RG'''
 def rg_valido(numero_do_rg):

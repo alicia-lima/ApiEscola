@@ -1,7 +1,6 @@
 from rest_framework import viewsets, generics, filters, status
 from escola.models import Aluno, Curso, Matricula
 from escola.serializer import AlunosSerializer, CursoSerializer, MatriculaSerializer, ListaMatriculaAlunoSerializer, ListaAlunosMatriculadosSerializer, AlunosSerializerV2
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
@@ -12,7 +11,7 @@ class AlunosViewsSet (viewsets.ModelViewSet):
 
     queryset = Aluno.objects.all()
     serializer_class = AlunosSerializer
-    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    # filter_backends = [filter.DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = ['nome']
     search_fields = ['nome', 'cpf']
     filterset_fields = ['ativo']
