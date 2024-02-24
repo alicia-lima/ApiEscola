@@ -1,12 +1,14 @@
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, force_authenticate, APIRequestFactory
 from escola.models import Curso
 from django.urls import reverse
 from rest_framework import status
+from django.contrib.auth.models import User
 
 
 class CursosTestCase(APITestCase):
     def setUp(self):
         self.list_url = reverse('Cursos-list')
+        self.user = User.objects.create_user('alicia', password='121279')
         self.curso_1 = Curso.objects.create(
             code_curso='CTT1', descricao='curso teste 1', nivel='B'
         )
@@ -14,15 +16,14 @@ class CursosTestCase(APITestCase):
             code_curso='CTT2', descricao='curso teste 2', nivel='I'
         )
 
-    # def test_falhador(self):
-    #     self.fail('Teste falhou de proposito, não se preocupe')
-    
     def test_requisicao_get_para_listar_cursos(self):
         ''' Teste para verificar se a requisição GET para listar os cursos 
             criando uma variável (response) que recebe uma solicitação (get)
             de um cliente e compara (assertEqual) com o status 200
         
         '''
+        
+        self.client.force_authenticate(self.user)
         response = self.client.get(self.list_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -33,12 +34,13 @@ class CursosTestCase(APITestCase):
             que recebe uma solicitação (post) de um cliente e compara (assertEqual) com o status 201
         
         '''
+          
         data = {
             'code_curso': 'CTT3',
             'descricao':'Curso teste 3',
             'nivel': 'A'
         }
-
+        self.client.force_authenticate(self.user)
         response = self.client.post(self.list_url, data=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -47,7 +49,8 @@ class CursosTestCase(APITestCase):
             cria uma váriavel (response) que recebe uma solicitação (delete) de um cliente 
             e compara (assertEqual) com o status 405
         '''
-        
+
+        self.client.force_authenticate(self.user)
         response = self.client.delete('/cursos/1/')
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
@@ -57,12 +60,12 @@ class CursosTestCase(APITestCase):
             o curso de acordo com models (Curso) depois outra váriavel (response) que recebe 
             uma solicitação (put) de um cliente e compara (assertEqual) com o status 200
         '''
-
+       
         data = {
             'code_curso': 'CTT1',
             'descricao': 'curso teste 1 atualizado',
             'nivel': 'A'
         }
-
+        self.client.force_authenticate(self.user)
         response = self.client.put('/cursos/1/', data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)

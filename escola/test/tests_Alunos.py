@@ -1,13 +1,15 @@
 from rest_framework.test import APITestCase
-from datetime import date, datetime
+from datetime import date
 from escola.models import Aluno
 from django.urls import reverse
 from rest_framework import status
+from django.contrib.auth.models import User
 
 
 class AlunosTestCase(APITestCase):
     def setUp(self):
         self.list_url = reverse('Alunos-list')
+        self.user = User.objects.create_user('c3po', password='123456')
         self.aluno_1 = Aluno.objects.create(
             id= '1', nome='Ana Carla', email='aninha@gmail.com', rg='418212594', 
             cpf='42334461024', celular='87 99654-3945', data_nascimento=date(1996,12,5),
@@ -23,6 +25,7 @@ class AlunosTestCase(APITestCase):
             de um cliente e compara (assertEqual) com o status 200
         
         '''
+        self.client.force_authenticate(self.user)
         response = self.client.get(self.list_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -33,6 +36,7 @@ class AlunosTestCase(APITestCase):
             que recebe uma solicitação (post) de um cliente e compara (assertEqual) com o status 201
         
         '''
+
         data = {
             'id': 3,
             'nome': 'Carla Alves',
@@ -44,6 +48,7 @@ class AlunosTestCase(APITestCase):
             'ativo': True
         }
 
+        self.client.force_authenticate(self.user)
         response = self.client.post(self.list_url, data=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -53,6 +58,7 @@ class AlunosTestCase(APITestCase):
             e compara (assertEqual) com o status 200
         '''
         
+        self.client.force_authenticate(self.user)
         response = self.client.delete('/alunos/1/')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
@@ -62,7 +68,7 @@ class AlunosTestCase(APITestCase):
             o curso de acordo com models (Aluno) depois outra váriavel (response) que recebe 
             uma solicitação (put) de um cliente e compara (assertEqual) com o status 200
         '''
-
+        
         data = {
             'id': 1,
             'nome': 'Ana Carla',
@@ -73,5 +79,6 @@ class AlunosTestCase(APITestCase):
             'data_nascimento': '1995-03-05'
         }
 
+        self.client.force_authenticate(self.user)
         response = self.client.put('/alunos/1/', data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)

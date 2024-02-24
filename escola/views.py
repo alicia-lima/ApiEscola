@@ -4,13 +4,14 @@ from escola.serializer import AlunosSerializer, CursoSerializer, MatriculaSerial
 from rest_framework.response import Response
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-
+from rest_framework.permissions import IsAuthenticated
 
 class AlunosViewsSet (viewsets.ModelViewSet):
     ''' Exibindo todos os alunos e alunas  '''
 
     queryset = Aluno.objects.all()
     serializer_class = AlunosSerializer
+    permission_classes = [IsAuthenticated]
     # filter_backends = [filter.DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = ['nome']
     search_fields = ['nome', 'cpf']
@@ -33,14 +34,14 @@ class AlunosViewsSet (viewsets.ModelViewSet):
 
 class CursosViewSet (viewsets.ModelViewSet):
     ''' Exibindo todos os Cursos'''
-    
+    permission_classes = [IsAuthenticated]
     queryset = Curso.objects.all().order_by('code_curso')
     serializer_class = CursoSerializer
     http_method_names = ['get', 'post', 'put', 'path']
 
 class MatriculaViewSet (viewsets.ModelViewSet):
     ''' Exibindo todas as Maticulas '''
-
+    permission_classes = [IsAuthenticated]
     queryset = Matricula.objects.all()
     serializer_class = MatriculaSerializer
     http_method_names = ['get', 'post', 'put', 'path']

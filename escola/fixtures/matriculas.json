@@ -1,0 +1,43 @@
+{
+"Aluno":[
+{
+    "id": 1,
+    "nome":"Ana Carla",
+    "email":"aninha@gmail.com", 
+    "rg":"418212594", 
+    "cpf":"42334461024", 
+    "celular":"87 99654-3945", 
+    "data_nascimento":"1996-12-5",
+    "ativo": true,
+    "foto": null
+},
+
+{
+    "id": 3,
+    "nome": "Carla Alves",
+    "email":"carlinha@gmail.com",
+    "rg": "474150227",
+    "cpf": "47255820000",
+    "celular":"68 99452-4664",
+    "data_nascimento": "2001-02-04",
+    "ativo": true,
+    "foto": null
+}
+
+],
+
+"Curso":[
+    {
+        "id": 1,
+        "code_curso":"CTT2",
+        "descricao":"Curso teste 2",
+        "nivel":"A"
+    },
+    {
+        "id": 2,
+        "code_curso":"CTT1",
+        "descricao":"Curso teste 1 atualizado",
+        "nivel":"A"
+    }
+]
+}

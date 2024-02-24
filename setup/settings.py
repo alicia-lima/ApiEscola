@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
@@ -129,13 +129,13 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
 
     
-#    'DEFAULT_PERMISSION_CLASSES': [
-#        'rest_framework.permissions.IsAuthenticated',
-#        'rest_framework.permissions.DjangoModelPermissions', 
-#    ],
-#     'DEFAULT_AUTHENTICATION_CLASSES': [
-#        'rest_framework.authentication.BasicAuthentication',
-#     ],
+   'DEFAULT_PERMISSION_CLASSES': [
+       'rest_framework.permissions.IsAuthenticated',
+       'rest_framework.permissions.DjangoModelPermissions', 
+   ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+       'rest_framework.authentication.BasicAuthentication',
+    ],
 #    essas linhas possibilitam que apenas pessoas logadas possam mexer na api 
 
     'DEFAULT_THROTTLE_CLASSES': [
